@@ -213,7 +213,7 @@ exports.postReset = (req, res, next) => {
                     
                         <p>Parolanızı güncellemek için aşağıdaki linke tıklayınız.</p>
                         <p>
-                            <a href="http://localhost:3000/reset-password/${token}">reset password </a>
+                            <a href="https://shoppingappmce.herokuapp.com/reset-password/${token}">reset password </a>
                         </p>
                     `,
               };
