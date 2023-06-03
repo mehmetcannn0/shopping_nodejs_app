@@ -87,9 +87,9 @@ mongoose
   .connect(ConnectionString)
   .then(() => {
     console.log("connected to mongodb");
-    console.log("http://localhost:3000/");
+    // console.log("http://localhost:3000/");
 
-    app.listen(3000);
+    app.listen(Process.env.PORT || 3000);
   })
   .catch((err) => {
     console.log(err);
