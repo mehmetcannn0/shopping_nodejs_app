@@ -3,8 +3,8 @@ const Login = require('../models/login');
 const bcrypt = require('bcrypt'); 
 const crypto = require('crypto');
 var nodemailer = require('nodemailer');
-const mailKey = require("../utility/mailkey").key;
- 
+// const mailKey = require("../utility/mailkey").key;
+ const mailKey=process.env.MAILKEY;
 exports.getLogin = (req, res, next) => {
     var errorMessage = req.session.errorMessage;
     delete req.session.errorMessage;

@@ -20,7 +20,8 @@ const accountRoutes = require("./routes/account");
 const errorController = require("./controllers/errors");
 
 const User = require("./models/user"); 
-const ConnectionString = require("./utility/database_key").key;
+// const ConnectionString = require("./utility/database_key").key;
+const ConnectionString= process.env.DBKEY;
 
 var store = new mongoDbStore({
   uri: ConnectionString,

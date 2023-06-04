@@ -1,6 +1,7 @@
 const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
-const db_key = require("./database_key").key;
+// const db_key = require("./database_key").key;
+const db_key=process.env.DBKEY;
 
 let _db;
 
