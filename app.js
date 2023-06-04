@@ -64,7 +64,6 @@ app.use((req, res, next) => {
   User.findById(req.session.user._id)
     .then((user) => {
       req.user = user;
-      // console.log("hata burda mı");
       next();
     })
     .catch((err) => {
@@ -87,7 +86,7 @@ app.use((error, req, res, next) => {
 mongoose
   .connect(ConnectionString)
   .then(() => {
-    console.log("connected to mongodb");
+    console.log("connected to db");
     // console.log("http://localhost:3000/");
 
     app.listen(process.env.PORT || 3000);

@@ -40,8 +40,8 @@ exports.postLogin = (req, res, next) => {
                     bcrypt.compare(password, user.password)
                         .then(async isSuccess => {
                             if (isSuccess) {
-                       
-
+                                console.log(`Login mail: ${user.email} Login name: ${user.name}` );
+                                
                                 req.session.user = user;
                                 req.session.isAuthenticated = true;
                                 return req.session.save(function (err) {
@@ -116,6 +116,7 @@ exports.postRegister = (req, res, next) => {
         })
         .then(() => {
             res.redirect('/login');
+            console.log(`Register mail: ${email} Register name: ${name}` );
 
        
             var transporter = nodemailer.createTransport({
@@ -136,9 +137,10 @@ exports.postRegister = (req, res, next) => {
               transporter.sendMail(mailOptions, function(error, info){
                 if (error) {
                   console.log(error);
-                } else {
-                  console.log('Email sent: ' + info.response);
-                }
+                } 
+                // else {
+                //   console.log('Email sent: ' + info.response);
+                // }
               });
 
 
@@ -221,9 +223,11 @@ exports.postReset = (req, res, next) => {
               transporter.sendMail(mailOptions, function(error, info){
                 if (error) {
                   console.log(error);
-                } else {
-                  console.log('Email sent: ' + info.response);
-                }
+                } 
+                //else 
+                // {
+                //   console.log('Email sent: ' + info.response);
+                // }
               });
 
 
@@ -288,7 +292,7 @@ exports.postNewPassword = (req, res, next) => {
 
 exports.getLogout = (req, res, next) => {
     req.session.destroy(err => {
-        console.log(err);
+        console.log("Logout err: "+err);
         res.redirect('/');
     });
 }
