@@ -24,11 +24,12 @@ exports.getIndex = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
   Product.find()
-    .then((products) => {
-      return products;
-    })
-    .then((products) => {
-      Category.find().then((categories) => {
+    .then((products) => { 
+      return Category.find().then((categories) => {
+        if (req.path.startsWith('/api')) {
+          
+          return res.json({ products, categories });
+        }
         res.render("shop/products", {
           title: "Products",
           products: products,
@@ -38,22 +39,39 @@ exports.getProducts = (req, res, next) => {
       });
     })
     .catch((err) => {
-      next(err);
+      res.status(500).send('Hata oluştu');
     });
 };
-
+exports.getCategories = (req, res, next) => {
+  Category.find()
+    .then((categories) => {
+      if (req.path.startsWith('/api')) {
+        return res.json(categories);   
+      }
+      res.render("shop/getcategories", {
+        title: "Categories",
+        path: "/getcategories",
+        categories: categories,
+      });
+    })
+    .catch((err) => {
+      res.status(500).send('Hata oluştu');
+    });
+}; 
 exports.getProductsByCategoryId = (req, res, next) => {
   const categoryid = req.params.categoryid;
   const model = [];
+ 
 
   Category.find()
     .then((categories) => {
       model.categories = categories;
-      return Product.find({
-        categories: categoryid,
-      });
+      return Product.find({ categories: categoryid });
     })
     .then((products) => {
+      if (req.path.startsWith('/api')) {
+        return res.json(products);
+      }
       res.render("shop/products", {
         title: "Products",
         products: products,
@@ -67,10 +85,13 @@ exports.getProductsByCategoryId = (req, res, next) => {
     });
 };
 
+
 exports.getProduct = (req, res, next) => {
   Product.findById(req.params.productid)
-    //.findOne({ name : 'Samsung S6', price: 2000 })
     .then((product) => {
+      if (req.path.startsWith('/api')) {
+        return res.json(product);
+      }
       res.render("shop/product-detail", {
         title: product.name,
         product: product,
